@@ -1,0 +1,52 @@
+$blue : #5383e8;
+
+.card {
+  background: #fff;
+  border-radius: 2px;
+  line-height: 2;
+  border-bottom: 2px solid #e9e9e9;
+}
+
+.card > p{
+  margin-bottom: 2em;
+}
+
+.middle {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.ratio {
+  width: 60%;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.ask{
+  background: none;
+  max-width: 512px;
+  align-items: center;
+}
+
+.slide{
+  padding-top: 130px;
+}
+
+.max1260{
+  max-width: 1260px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.blue{
+  background-color: $blue;
+}

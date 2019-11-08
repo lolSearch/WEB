@@ -1,0 +1,39 @@
+$blue: #5383e8;
+
+@mixin square($size) {
+  padding: $size*0.3rem $size*0.7rem;
+}
+
+.button {
+  border: 0;
+  outline: 0;
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1px solid #000;
+  background: $blue;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  font-family: sans-serif;
+  text-decoration: none;
+  transition: all 0.3s; 
+  &:focus {
+    background: rgba(83, 131, 232, .8);
+    transform: scale(1.05);
+  }
+}
+
+.small {
+  @include square(0.5);
+}
+
+.medium {
+  @include square(1);
+}
+
+.large {
+  @include square(2);
+}
