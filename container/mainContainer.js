@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import Button from '../components/atom/button';
 import Input from '../components/atom/input';
 import Router from 'next/router'
+import {StatefulToolTip } from 'react-portal-tooltip';
 import Card from '../components/atom/card';
 import Text from '../components/atom/text';
 import Subtitle from '../components/atom/subtitle';
@@ -13,35 +14,47 @@ import './mainContainer.scss';
 
 //시간나면 챔피언 이름 idx로 바꿀것.
 const mainContainer = (props) => {
-  const { lolSearch } = props.store;
+  const { championStore } = props.store;
 
   useEffect(() => {
-    getChampion()
+    getChampions()
       .then(() => {
         getLotation()
           .then(() => {
-            let lotationChampions = lolSearch.lotationChampionIdx.map((item) => {
-              lolSearch.champions.forEach((element) => {
+            let lotationChampions = championStore.lotationChampionIdx.map((item) => {
+              championStore.champions.forEach((element) => {
                 if (element.key == item) {
                   item = element.name;
                 }
               });
               return item;
             })
-            lolSearch.setLotation(lotationChampions);
+            championStore.setLotation(lotationChampions);
           })
       })
   }, [])
   //로딩 구현 하기?
 
   const [summonerName, setSummonerName] = useState('');
+  const [isTooltipActive, setIsTooltipActive] = useState(false);
 
-  const getLotation = async () => {
-    await lolSearch.getLotationChampion();
+  const toggleTooltip = (name) => {
+    if(typeof name === 'string'){
+      getChampion(name);
+    }
+    setIsTooltipActive(!isTooltipActive);
   }
 
-  const getChampion = async () => {
-    await lolSearch.getChampion();
+  const getLotation = async () => {
+    await championStore.getLotationChampion();
+  }
+
+  const getChampions = async () => {
+    await championStore.getChampions();
+  }
+
+  const getChampion = async (championName) => {
+    await championStore.getChampion(championName);
   }
 
   const handleSearch = () => {
@@ -77,14 +90,30 @@ const mainContainer = (props) => {
           <h2>이번주 로테이션</h2>
         </div>
         <div className="champion-list">
-          {lolSearch.lotationChampion !== undefined &&
-            lolSearch.lotationChampion.map((name) => {
+          {championStore.lotationChampion !== undefined &&
+            championStore.lotationChampion.map((name) => {
+              const Img = <img
+                          id={`champion-${name}`}
+                          src={`/static/champion/${name}.png`}
+                          onMouseEnter={() => {toggleTooltip(name)}}
+                          onMouseLeave={toggleTooltip}
+                          alt={name}
+                        />; 
               return (
-                <div className="champion-list-index" key={name}>
-                  <Image
-                    src={`/static/champion/${name}.png`}
-                    alt={name}
-                  />
+                <div className="champion-list-index" key={name}>                 
+                  <StatefulToolTip
+                    active={isTooltipActive} 
+                    position="bottom" 
+                    arrow="right" 
+                    parent={Img}>
+                      <div>
+                        <p>{championStore.champion.title}</p>
+                        <p>{name}</p>
+                        <p>타입: {championStore.champion.partype}</p>
+                        <p>포지션: {championStore.champion.tags}</p>
+                        <p>{championStore.champion.lore}</p>
+                      </div>
+                  </StatefulToolTip>
                   <Text>
                     {name}
                   </Text>
