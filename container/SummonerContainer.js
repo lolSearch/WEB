@@ -6,15 +6,15 @@ import Image from '../components/atom/image';
 
 const SummonerContainer = (props) => {
   const router = useRouter();
-  const {lolSearch} = props.store;
+  const {summonerStore} = props.store;
 
   useEffect(() => {
     router.query = queryString.parse(router.asPath.split(/\?/)[1]);
 
-    lolSearch.getSummonerByName(router.query.summoner);
+    summonerStore.getSummonerByName(router.query.summoner);
   },[])
   
-  const summoner = lolSearch.summoner;
+  const summoner = summonerStore.summoner;
 
   return (
     <div>
