@@ -1,7 +1,9 @@
-import lolSearchStore from './lolSearchStore';
+import SummonerStore from './summoner';
+import ChampionStore from './champion';
 
 const stores = {
-  lolSearch: new lolSearchStore(),
+  championStore: new ChampionStore(),
+  summonerStore: new SummonerStore(),
 }
 
 export default stores;
