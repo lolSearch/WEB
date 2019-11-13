@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
-import Button from '../components/atom/button';
-import Input from '../components/atom/input';
 import Router from 'next/router'
 import {StatefulToolTip } from 'react-portal-tooltip';
 import Card from '../components/atom/card';
 import Text from '../components/atom/text';
-import Subtitle from '../components/atom/subtitle';
 import logo from '../components/images/opgg.png';
 import Image from '../components/atom/image';
 import './mainContainer.scss';
@@ -64,6 +61,13 @@ const mainContainer = (props) => {
     });
   }
 
+  const handleKeyDown = (e) => {
+    if(event.keyCode == 13)
+    {
+      handleSearch();
+    }
+  }
+
   const handleChange = (e) => {
     setSummonerName(e.target.value);
   }
@@ -77,6 +81,7 @@ const mainContainer = (props) => {
             className="summoner-form-input"
             onChange={handleChange}
             value={summonerName}
+            onKeyDown={handleKeyDown}
             placeholder="소환사명"/>
           <button
             className="summoner-form-button"
@@ -107,7 +112,7 @@ const mainContainer = (props) => {
                     arrow="right" 
                     parent={Img}>
                       <div>
-                        <p>{championStore.champion.title}</p>
+                        <h3>{championStore.champion.title}</h3>
                         <p>{name}</p>
                         <p>타입: {championStore.champion.partype}</p>
                         <p>포지션: {championStore.champion.tags}</p>
