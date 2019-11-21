@@ -1,0 +1,21 @@
+.top {
+  background-color: #5383E8;
+  border-bottom: 1px solid #4171d6;
+  &-menu {
+    display: flex;
+    align-items: center;
+    max-width: 1300px;
+    height: 48px;
+    margin: 0 auto;
+    font-size: 18px;
+
+    &-item {
+      list-style: none;
+      >a {
+        color: white;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+      }
+    }
+  }
+}
